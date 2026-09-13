@@ -1,0 +1,22 @@
+---
+// Marquee Component
+const stack = [
+  "React", "Next.js", "Vue 3", "TypeScript", "Node.js", "Python", "Go",
+  "AWS", "Docker", "Kubernetes", "PostgreSQL", "GraphQL", "Shopify", "Figma", "Stripe"
+];
+// Repeat for infinite marquee effect
+const fullStack = [...stack, ...stack];
+---
+<section class="marquee-section">
+  <p class="marquee-eyebrow">Stack con el que trabajamos</p>
+  <div class="marquee-track">
+    <div class="marquee-inner" id="marqueeInner">
+      {fullStack.map((item) => (
+        <>
+          <span class="mitem">{item}</span>
+          <span class="msep">&#183;</span>
+        </>
+      ))}
+    </div>
+  </div>
+</section>

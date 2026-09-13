@@ -1,0 +1,27 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Navbar from '../components/Navbar.astro';
+import Hero from '../components/Hero.astro';
+import Services from '../components/Services.astro';
+import Portfolio from '../components/Portfolio.astro';
+import Process from '../components/Process.astro';
+import Pricing from '../components/Pricing.astro';
+import Faq from '../components/Faq.astro';
+import CTA from '../components/CTA.astro';
+import Footer from '../components/Footer.astro';
+import '../styles/global.css';
+---
+
+<Layout title="Monni — Estudio de Diseño & Desarrollo de Páginas Web" description="Diseñamos y desarrollamos páginas web a medida que convierten visitas en clientes. Sitios corporativos, tiendas online y landings de alta conversión.">
+  <Navbar />
+  <main id="main">
+    <Hero />
+    <Services />
+    <Portfolio />
+    <Process />
+    <Pricing />
+    <Faq />
+    <CTA />
+  </main>
+  <Footer />
+</Layout>
