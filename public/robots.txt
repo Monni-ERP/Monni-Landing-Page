@@ -1,0 +1,6 @@
+# https://www.robotstxt.org/robotstxt.html
+User-agent: *
+Allow: /
+
+# Sitemap oficial para indexación
+Sitemap: https://monniagency.com/sitemap.xml

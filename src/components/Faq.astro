@@ -1,5 +1,27 @@
 ---
-// FAQ Component: Resuelve objeciones comerciales reales
+// FAQ Component: Resuelve objeciones comerciales reales con formato acordeón interactivo
+const faqs = [
+  {
+    question: "¿El sitio web será 100% de mi propiedad?",
+    answer: "Sí, absolutamente. Una vez completado el proyecto, te entregamos el acceso total a tu dominio, hosting, código y archivos de diseño. No cobramos mensualidades forzosas de \"alquiler\" de web."
+  },
+  {
+    question: "¿Podré editar los textos y fotos yo mismo más adelante?",
+    answer: "Claro que sí. Configuramos el sitio para que puedas cambiar contenidos clave (textos, imágenes de catálogo o datos de contacto) de forma sencilla sin tocar código ni romper el diseño."
+  },
+  {
+    question: "¿Cómo se maneja el pago del proyecto?",
+    answer: "Trabajamos habitualmente con un esquema de 50% al iniciar para reservar fecha de diseño y comenzar el trabajo, y el 50% restante una vez que el sitio esté aprobado y listo para publicarse. Aceptamos transferencias bancarias y pagos con tarjeta."
+  },
+  {
+    question: "¿Qué pasa si no tengo los textos o fotos de mi empresa listos?",
+    answer: "No te preocupes. Te ayudamos a estructurar la información con un cuestionario guiado y redactamos propuestas de copywriting comercial para que no te sientas bloqueado por la falta de material."
+  },
+  {
+    question: "¿Qué incluye el soporte post-lanzamiento?",
+    answer: "Incluye monitoreo del funcionamiento, corrección de cualquier detalle imprevisto, resolución de dudas de uso y ajustes menores durante los primeros 30 días posteriores al lanzamiento."
+  }
+];
 ---
 <section class="faq-section" id="faq">
   <div class="container">
@@ -11,51 +33,37 @@
       </p>
     </div>
 
-    <div class="faq-list gs-reveal-up">
-      <div class="faq-item">
-        <div class="faq-question">
-          <span>¿El sitio web será 100% de mi propiedad?</span>
+    <div class="faq-list gs-reveal-up" id="faqAccordion">
+      {faqs.map((faq, index) => (
+        <div class="faq-item" data-faq-index={index}>
+          <button 
+            type="button" 
+            class="faq-question" 
+            aria-expanded="false" 
+            aria-controls={`faq-ans-${index}`} 
+            id={`faq-btn-${index}`}
+          >
+            <span class="faq-question-text">{faq.question}</span>
+            <span class="faq-icon-pill" aria-hidden="true">
+              <svg class="faq-icon-svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <line x1="12" y1="5" x2="12" y2="19"></line>
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+              </svg>
+            </span>
+          </button>
+          <div 
+            class="faq-answer-collapse" 
+            id={`faq-ans-${index}`} 
+            role="region" 
+            aria-labelledby={`faq-btn-${index}`} 
+            aria-hidden="true"
+          >
+            <div class="faq-answer-inner">
+              <p>{faq.answer}</p>
+            </div>
+          </div>
         </div>
-        <div class="faq-answer">
-          Sí, absolutamente. Una vez completado el proyecto, te entregamos el acceso total a tu dominio, hosting, código y archivos de diseño. No cobramos mensualidades forzosas de "alquiler" de web.
-        </div>
-      </div>
-
-      <div class="faq-item">
-        <div class="faq-question">
-          <span>¿Podré editar los textos y fotos yo mismo más adelante?</span>
-        </div>
-        <div class="faq-answer">
-          Claro que sí. Configuramos el sitio para que puedas cambiar contenidos clave (textos, imágenes de catálogo o datos de contacto) de forma sencilla sin tocar código ni romper el diseño.
-        </div>
-      </div>
-
-      <div class="faq-item">
-        <div class="faq-question">
-          <span>¿Cómo se maneja el pago del proyecto?</span>
-        </div>
-        <div class="faq-answer">
-          Trabajamos habitualmente con un esquema de 50% al iniciar para reservar fecha de diseño y comenzar el trabajo, y el 50% restante una vez que el sitio esté aprobado y listo para publicarse. Aceptamos transferencias bancarias y pagos con tarjeta.
-        </div>
-      </div>
-
-      <div class="faq-item">
-        <div class="faq-question">
-          <span>¿Qué pasa si no tengo los textos o fotos de mi empresa listos?</span>
-        </div>
-        <div class="faq-answer">
-          No te preocupes. Te ayudamos a estructurar la información con un cuestionario guiado y redactamos propuestas de copywriting comercial para que no te sientas bloqueado por la falta de material.
-        </div>
-      </div>
-
-      <div class="faq-item">
-        <div class="faq-question">
-          <span>¿Qué incluye el soporte post-lanzamiento?</span>
-        </div>
-        <div class="faq-answer">
-          Incluye monitoreo del funcionamiento, corrección de cualquier detalle imprevisto, resolución de dudas de uso y ajustes menores durante los primeros 30 días posteriores al lanzamiento.
-        </div>
-      </div>
+      ))}
     </div>
   </div>
 </section>

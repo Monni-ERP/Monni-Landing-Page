@@ -2,12 +2,140 @@
 interface Props {
   title?: string;
   description?: string;
+  canonicalUrl?: string;
+  ogImage?: string;
 }
 
+const siteUrl = 'https://monniagency.com';
+
 const {
-  title = "Monni — Diseño Web & Desarrollo a Medida",
-  description = "Creamos páginas web y experiencias digitales para empresas y marcas que buscan diferenciarse y convertir más visitantes en clientes."
+  title = "Monni — Estudio de Diseño & Desarrollo de Páginas Web",
+  description = "Diseñamos y desarrollamos páginas web a medida que convierten visitas en clientes. Sitios corporativos, tiendas online y landings de alta conversión.",
+  canonicalUrl = `${siteUrl}${Astro.url.pathname}`,
+  ogImage = "/assets/og-cover.png",
 } = Astro.props;
+
+// Asegurar URL absoluta para previsualización en WhatsApp y redes
+const fullOgImageUrl = new URL(ogImage, siteUrl).toString();
+
+const schemaData = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": `${siteUrl}/#website`,
+      "url": siteUrl,
+      "name": "Monni",
+      "description": description,
+      "inLanguage": "es-PE"
+    },
+    {
+      "@type": "ProfessionalService",
+      "@id": `${siteUrl}/#organization`,
+      "name": "Monni — Estudio de Diseño & Desarrollo Web",
+      "image": fullOgImageUrl,
+      "description": description,
+      "url": siteUrl,
+      "telephone": "+51906085822",
+      "priceRange": "$$$",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Lima",
+        "addressRegion": "Lima",
+        "addressCountry": "PE"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": -12.046374,
+        "longitude": -77.042793
+      },
+      "sameAs": [
+        "https://wa.me/51906085822"
+      ],
+      "openingHoursSpecification": {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": [
+          "Monday",
+          "Tuesday",
+          "Wednesday",
+          "Thursday",
+          "Friday"
+        ],
+        "opens": "09:00",
+        "closes": "18:00"
+      },
+      "offers": [
+        {
+          "@type": "Offer",
+          "name": "Landing Express",
+          "price": "390",
+          "priceCurrency": "USD",
+          "description": "1 Página orientada a conversión con redacción persuasiva y entrega en 7 a 10 días."
+        },
+        {
+          "@type": "Offer",
+          "name": "Web Corporativa Pro",
+          "price": "850",
+          "priceCurrency": "USD",
+          "description": "Hasta 5 secciones/páginas a medida con diseño en Figma y SEO on-page."
+        },
+        {
+          "@type": "Offer",
+          "name": "E-commerce / Tienda",
+          "price": "1450",
+          "priceCurrency": "USD",
+          "description": "Tienda completa con catálogo, pasarelas de pago y panel de administración."
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "@id": `${siteUrl}/#faq`,
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "¿El sitio web será 100% de mi propiedad?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Sí, absolutamente. Una vez completado el proyecto, te entregamos el acceso total a tu dominio, hosting, código y archivos de diseño. No cobramos mensualidades forzosas de 'alquiler' de web."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "¿Podré editar los textos y fotos yo mismo más adelante?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Claro que sí. Configuramos el sitio para que puedas cambiar contenidos clave (textos, imágenes de catálogo o datos de contacto) de forma sencilla sin tocar código ni romper el diseño."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "¿Cómo se maneja el pago del proyecto?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Trabajamos habitualmente con un esquema de 50% al iniciar para reservar fecha de diseño y comenzar el trabajo, y el 50% restante una vez que el sitio esté aprobado y listo para publicarse. Aceptamos transferencias bancarias y pagos con tarjeta."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "¿Qué pasa si no tengo los textos o fotos de mi empresa listos?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No te preocupes. Te ayudamos a estructurar la información con un cuestionario guiado y redactamos propuestas de copywriting comercial para que no te sientas bloqueado por la falta de material."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "¿Qué incluye el soporte post-lanzamiento?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Incluye monitoreo del funcionamiento, corrección de cualquier detalle imprevisto, resolución de dudas de uso y ajustes menores durante los primeros 30 días posteriores al lanzamiento."
+          }
+        }
+      ]
+    }
+  ]
+};
 ---
 
 <!DOCTYPE html>
@@ -15,13 +143,51 @@ const {
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content={description} />
-  <link rel="icon" type="image/png" href="/assets/logo-sm.png" />
+  
+  <!-- SEO General & Indexación -->
   <title>{title}</title>
+  <meta name="description" content={description} />
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+  <link rel="canonical" href={canonicalUrl} />
+  <link rel="icon" type="image/png" href="/assets/logo-sm.png" />
+  
+  <!-- SEO Local & Geo-targeting (Lima, Perú) -->
+  <meta name="geo.region" content="PE-LIM" />
+  <meta name="geo.placename" content="Lima, Perú" />
+  <meta name="geo.position" content="-12.046374;-77.042793" />
+  <meta name="ICBM" content="-12.046374, -77.042793" />
+
+  <!-- Theme Color & Mobile Browser Tinting -->
+  <meta name="theme-color" content="#FBFBFC" media="(prefers-color-scheme: light)" />
+  <meta name="theme-color" content="#0F1117" media="(prefers-color-scheme: dark)" />
+  <meta name="apple-mobile-web-app-title" content="Monni" />
+  <meta name="application-name" content="Monni" />
+
+  <!-- Open Graph (WhatsApp, LinkedIn, Facebook, Telegram) -->
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Monni Estudio Web" />
+  <meta property="og:locale" content="es_PE" />
+  <meta property="og:url" content={canonicalUrl} />
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:image" content={fullOgImageUrl} />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="Monni — Estudio de Diseño & Desarrollo de Páginas Web" />
+
+  <!-- Twitter / X Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content={title} />
+  <meta name="twitter:description" content={description} />
+  <meta name="twitter:image" content={fullOgImageUrl} />
+
+  <!-- Tipografías optimizadas con display=swap -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <!-- Fuente grotesk premium al estilo Clay (Plus Jakarta Sans 400-800 con tracking negativo fino) -->
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <!-- Structured Data JSON-LD Schema.org (@graph: WebSite, ProfessionalService, FAQPage) -->
+  <script type="application/ld+json" set:html={JSON.stringify(schemaData)} />
 </head>
 <body>
   <slot />

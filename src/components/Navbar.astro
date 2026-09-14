@@ -1,13 +1,40 @@
 ---
 // Navbar Component - Inspirado en el estilo minimalista, sobrio y espacioso de Clay Global
+// Con menú móvil interactivo que se expande directamente desde el logo de Monni
 ---
 <header class="site-header" id="header">
   <div class="clay-container nav-wrap">
-    <a href="#" class="brand">
-      <img src="/assets/logo.png" alt="Monni" class="brand-logo" />
-      <span class="brand-name">Monni</span>
-    </a>
+    <!-- Brand / Trigger Móvil del Menú -->
+    <div class="brand-container">
+      <a 
+        href="#" 
+        class="brand brand-trigger" 
+        id="brandLogoBtn" 
+        aria-label="Monni - Abrir menú de navegación" 
+        aria-expanded="false" 
+        aria-controls="mobileMenuPopover"
+        role="button"
+      >
+        <div class="brand-logo-wrapper">
+          <picture>
+            <source srcset="/assets/logo.webp" type="image/webp" />
+            <img src="/assets/logo.png" alt="Monni — Estudio de Diseño y Desarrollo Web" class="brand-logo" width="38" height="38" loading="eager" decoding="async" />
+          </picture>
+          <!-- Indicador hamburguesa sutil en móvil integrado en el logo -->
+          <span class="logo-hamburger-cue" aria-hidden="true">
+            <span class="cue-bar"></span>
+            <span class="cue-bar"></span>
+            <span class="cue-bar"></span>
+          </span>
+        </div>
+        <span class="brand-name">Monni</span>
+        <span class="brand-arrow-cue" aria-hidden="true">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m6 9 6 6 6-6"/></svg>
+        </span>
+      </a>
+    </div>
 
+    <!-- Menú Desktop -->
     <nav class="nav-desktop">
       <ul class="nav-menu">
         <li><a href="#servicios" class="nav-link">Servicios</a></li>
@@ -19,6 +46,7 @@
       </ul>
     </nav>
 
+    <!-- Acciones Derecha -->
     <div class="nav-actions">
       <button class="theme-toggle" id="themeToggle" aria-label="Cambiar tema" title="Modo Claro / Oscuro">
         <svg class="theme-icon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -40,3 +68,112 @@
     </div>
   </div>
 </header>
+
+<!-- Overlay de fondo con efecto desenfoque -->
+<div class="mobile-menu-overlay" id="mobileMenuOverlay" aria-hidden="true"></div>
+
+<!-- Menú flotante emergente desde el logo -->
+<div class="mobile-menu-popover" id="mobileMenuPopover" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Menú principal de Monni">
+  <!-- Flecha indicadora superior que apunta directo al logo -->
+  <div class="popover-arrow" aria-hidden="true"></div>
+
+  <div class="mobile-menu-inner">
+    <div class="mobile-menu-topbar">
+      <div class="mobile-brand-badge">
+        <picture>
+          <source srcset="/assets/logo.webp" type="image/webp" />
+          <img src="/assets/logo.png" alt="Monni — Estudio de Diseño y Desarrollo Web" class="mobile-menu-logo" width="32" height="32" loading="lazy" decoding="async" />
+        </picture>
+        <div>
+          <strong class="mobile-brand-name">Monni</strong>
+          <span class="mobile-brand-sub">Estudio de Páginas Web</span>
+        </div>
+      </div>
+      <button type="button" class="mobile-menu-close" id="mobileMenuClose" aria-label="Cerrar menú">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+    </div>
+
+    <nav class="mobile-nav-list">
+      <a href="#servicios" class="mobile-nav-item">
+        <div class="mobile-nav-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+        </div>
+        <div class="mobile-nav-content">
+          <span class="mobile-nav-label">Servicios</span>
+          <span class="mobile-nav-desc">Webs corporativas, e-commerce y landings</span>
+        </div>
+        <svg class="mobile-nav-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg>
+      </a>
+
+      <a href="#proyectos" class="mobile-nav-item">
+        <div class="mobile-nav-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
+        </div>
+        <div class="mobile-nav-content">
+          <span class="mobile-nav-label">Proyectos</span>
+          <span class="mobile-nav-desc">Casos reales de clientes y resultados</span>
+        </div>
+        <svg class="mobile-nav-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg>
+      </a>
+
+      <a href="#metodo" class="mobile-nav-item">
+        <div class="mobile-nav-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>
+        </div>
+        <div class="mobile-nav-content">
+          <span class="mobile-nav-label">El Método</span>
+          <span class="mobile-nav-desc">Hecho a mano vs plantillas genéricas</span>
+        </div>
+        <svg class="mobile-nav-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg>
+      </a>
+
+      <a href="#proceso" class="mobile-nav-item">
+        <div class="mobile-nav-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+        </div>
+        <div class="mobile-nav-content">
+          <span class="mobile-nav-label">Proceso</span>
+          <span class="mobile-nav-desc">4 pasos de entrega sin complicaciones</span>
+        </div>
+        <svg class="mobile-nav-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg>
+      </a>
+
+      <a href="#planes" class="mobile-nav-item">
+        <div class="mobile-nav-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+        </div>
+        <div class="mobile-nav-content">
+          <span class="mobile-nav-label">Planes</span>
+          <span class="mobile-nav-desc">Inversión clara y plazos definidos</span>
+        </div>
+        <svg class="mobile-nav-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg>
+      </a>
+
+      <a href="#faq" class="mobile-nav-item">
+        <div class="mobile-nav-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+        </div>
+        <div class="mobile-nav-content">
+          <span class="mobile-nav-label">Preguntas Frecuentes</span>
+          <span class="mobile-nav-desc">Propiedad 100%, pagos y soporte</span>
+        </div>
+        <svg class="mobile-nav-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg>
+      </a>
+    </nav>
+
+    <div class="mobile-menu-actions">
+      <a href="#contacto" class="btn btn-primary mobile-btn-contact">
+        Iniciar Proyecto
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+      </a>
+      <a href="https://wa.me/51906085822?text=Hola%20Monni,%20quiero%20cotizar%20una%20página%20web" target="_blank" rel="noopener" class="btn btn-whatsapp mobile-btn-whatsapp">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+        WhatsApp
+      </a>
+    </div>
+  </div>
+</div>

@@ -256,16 +256,44 @@ img {
   height: 84px;
 }
 
+/* Brand & Mobile Trigger */
+.brand-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
 .brand {
   display: flex;
   align-items: center;
   gap: 0.85rem;
+  text-decoration: none;
+  cursor: pointer;
+  color: var(--text-primary);
+  user-select: none;
+}
+
+.brand-trigger {
+  border-radius: var(--radius-full);
+  padding: 0.35rem 0.5rem;
+  margin-left: -0.5rem;
+  border: 1px solid transparent;
+  transition: background-color var(--transition), border-color var(--transition), transform var(--transition);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.brand-logo-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .brand-logo {
   width: 38px;
   height: 38px;
   object-fit: contain;
+  transition: transform var(--transition);
 }
 
 .brand-name {
@@ -273,6 +301,92 @@ img {
   font-weight: 800;
   letter-spacing: -0.03em;
   color: var(--text-primary);
+}
+
+/* Indicador hamburguesa integrado en el logo para móvil */
+.logo-hamburger-cue {
+  display: none;
+}
+
+.brand-arrow-cue {
+  display: none;
+}
+
+@media (max-width: 968px) {
+  .brand-trigger {
+    background-color: var(--bg-subtle);
+    border-color: var(--border);
+    padding: 0.3rem 0.75rem 0.3rem 0.45rem;
+  }
+
+  .brand-trigger:active {
+    transform: scale(0.96);
+  }
+
+  .brand-trigger.is-active {
+    background-color: var(--accent-soft);
+    border-color: var(--accent-border);
+  }
+
+  .brand-trigger.is-active .brand-name {
+    color: var(--accent);
+  }
+
+  .logo-hamburger-cue {
+    position: absolute;
+    bottom: -2px;
+    right: -4px;
+    width: 17px;
+    height: 17px;
+    background-color: var(--accent);
+    border: 2px solid var(--bg-page);
+    border-radius: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2.2px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+    transition: background-color var(--transition), transform var(--transition);
+  }
+
+  .cue-bar {
+    display: block;
+    width: 7.5px;
+    height: 1.3px;
+    background-color: #FFFFFF;
+    border-radius: 1px;
+    transition: transform 0.25s ease, opacity 0.25s ease;
+  }
+
+  .brand-trigger.is-active .logo-hamburger-cue {
+    background-color: var(--text-primary);
+  }
+
+  .brand-trigger.is-active .cue-bar:nth-child(1) {
+    transform: translateY(3.5px) rotate(45deg);
+  }
+
+  .brand-trigger.is-active .cue-bar:nth-child(2) {
+    opacity: 0;
+  }
+
+  .brand-trigger.is-active .cue-bar:nth-child(3) {
+    transform: translateY(-3.5px) rotate(-45deg);
+  }
+
+  .brand-arrow-cue {
+    display: inline-flex;
+    align-items: center;
+    color: var(--text-muted);
+    transition: transform var(--transition), color var(--transition);
+    margin-left: -0.2rem;
+  }
+
+  .brand-trigger.is-active .brand-arrow-cue {
+    transform: rotate(180deg);
+    color: var(--accent);
+  }
 }
 
 .nav-desktop {
@@ -316,6 +430,7 @@ img {
   align-items: center;
   justify-content: center;
   transition: all var(--transition);
+  cursor: pointer;
 }
 
 .theme-toggle:hover {
@@ -340,6 +455,280 @@ img {
   background-color: var(--text-primary);
   color: var(--bg-surface);
   border-color: var(--text-primary);
+}
+
+/* ==========================================================================
+   MENÚ MÓVIL POPOVER (Se abre directamente desde el logo de Monni)
+   ========================================================================== */
+.mobile-menu-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh;
+  background-color: rgba(15, 23, 42, 0.75);
+  backdrop-filter: blur(18px) saturate(180%);
+  -webkit-backdrop-filter: blur(18px) saturate(180%);
+  z-index: 9998;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.32s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.32s;
+}
+
+[data-theme="dark"] .mobile-menu-overlay {
+  background-color: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(22px) saturate(180%);
+  -webkit-backdrop-filter: blur(22px) saturate(180%);
+}
+
+.mobile-menu-overlay.is-active {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+/* Efecto de profundidad estética en el fondo de la página al abrir el menú */
+body.menu-open #main {
+  filter: blur(5px);
+  transform: scale(0.985);
+  transform-origin: top center;
+  transition: filter 0.32s cubic-bezier(0.16, 1, 0.3, 1), transform 0.32s cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: none;
+}
+
+#main {
+  transition: filter 0.28s ease, transform 0.28s ease;
+}
+
+.mobile-menu-popover {
+  position: fixed;
+  top: 78px;
+  left: 1rem;
+  width: calc(100% - 2rem);
+  max-width: 410px;
+  max-height: calc(100dvh - 94px);
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.45), 0 0 0 1px rgba(0, 0, 0, 0.08);
+  z-index: 9999;
+  
+  /* Origen de animación: Exactamente en el logo de Monni (arriba a la izquierda) */
+  transform-origin: 35px 0px;
+  transform: scale(0.88) translateY(-14px);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: transform 0.32s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.25s ease, visibility 0.32s;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+[data-theme="dark"] .mobile-menu-popover {
+  box-shadow: 0 35px 70px -15px rgba(0, 0, 0, 0.8), 0 0 0 1px var(--border);
+}
+
+.mobile-menu-popover.is-active {
+  transform: scale(1) translateY(0);
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+/* Flechita decorativa que une visualmente el popover con el logo */
+.popover-arrow {
+  position: absolute;
+  top: -6px;
+  left: 36px;
+  width: 12px;
+  height: 12px;
+  background-color: var(--bg-surface);
+  border-left: 1px solid var(--border);
+  border-top: 1px solid var(--border);
+  transform: rotate(45deg);
+  z-index: 10;
+}
+
+.mobile-menu-inner {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  max-height: calc(100dvh - 94px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+  padding: 1.25rem;
+}
+
+/* Cabecera del popover */
+.mobile-menu-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 0.75rem;
+}
+
+.mobile-brand-badge {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.mobile-menu-logo {
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
+}
+
+.mobile-brand-name {
+  display: block;
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  line-height: 1.15;
+}
+
+.mobile-brand-sub {
+  display: block;
+  font-size: 0.725rem;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.mobile-menu-close {
+  width: 34px;
+  height: 34px;
+  border-radius: var(--radius-full);
+  border: 1px solid var(--border);
+  background-color: var(--bg-page);
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all var(--transition);
+}
+
+.mobile-menu-close:hover {
+  background-color: var(--bg-subtle);
+  color: var(--text-primary);
+  border-color: var(--text-muted);
+}
+
+/* Lista de enlaces */
+.mobile-menu-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  margin-bottom: 1rem;
+}
+
+.mobile-nav-item {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  padding: 0.7rem 0.85rem;
+  border-radius: var(--radius-md);
+  text-decoration: none;
+  background-color: transparent;
+  border: 1px solid transparent;
+  transition: all var(--transition);
+}
+
+.mobile-nav-item:hover, .mobile-nav-item:active {
+  background-color: var(--bg-subtle);
+  border-color: var(--border);
+}
+
+.mobile-nav-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-sm);
+  background-color: var(--bg-page);
+  border: 1px solid var(--border);
+  color: var(--accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: background-color var(--transition), transform var(--transition);
+}
+
+.mobile-nav-item:hover .mobile-nav-icon {
+  background-color: var(--accent);
+  color: #FFFFFF;
+  border-color: var(--accent);
+  transform: scale(1.05);
+}
+
+.mobile-nav-content {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.mobile-nav-label {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  line-height: 1.25;
+}
+
+.mobile-nav-desc {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.mobile-nav-chevron {
+  color: var(--text-light);
+  flex-shrink: 0;
+  transition: transform var(--transition), color var(--transition);
+}
+
+.mobile-nav-item:hover .mobile-nav-chevron {
+  transform: translateX(3px);
+  color: var(--accent);
+}
+
+/* Botones inferiores del menú móvil */
+.mobile-menu-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--border);
+}
+
+.mobile-btn-contact, .mobile-btn-whatsapp {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  font-size: 0.9rem;
+  font-weight: 700;
+  border-radius: var(--radius-md);
+  text-decoration: none;
+}
+
+/* En pantallas de escritorio, ocultar el overlay y popover completamente */
+@media (min-width: 969px) {
+  .mobile-menu-overlay,
+  .mobile-menu-popover {
+    display: none !important;
+  }
 }
 
 /* ==========================================================================
@@ -785,7 +1174,7 @@ img {
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
   padding: 2rem;
-  transition: transform var(--transition), border-color var(--transition), box-shadow var(--transition);
+  transition: border-color var(--transition), box-shadow var(--transition);
   display: flex;
   flex-direction: column;
 }
@@ -794,6 +1183,7 @@ img {
   transform: translateY(-4px);
   border-color: var(--accent);
   box-shadow: var(--shadow-md);
+  transition: transform var(--transition), border-color var(--transition), box-shadow var(--transition);
 }
 
 .service-icon {
@@ -806,11 +1196,16 @@ img {
   align-items: center;
   justify-content: center;
   margin-bottom: 1.5rem;
+  flex-shrink: 0;
 }
 
 .service-title {
   font-size: 1.25rem;
+  line-height: 1.3;
   margin-bottom: 0.75rem;
+  min-height: 3.25rem;
+  display: flex;
+  align-items: flex-start;
 }
 
 .service-desc {
@@ -1146,7 +1541,7 @@ img {
 }
 
 .faq-list {
-  max-width: 760px;
+  max-width: 780px;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
@@ -1158,25 +1553,103 @@ img {
   border-radius: var(--radius-md);
   background-color: var(--bg-page);
   overflow: hidden;
+  transition: all 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.faq-item:hover {
+  border-color: var(--border-focus);
+}
+
+.faq-item.is-open {
+  border-color: var(--accent);
+  background-color: var(--bg-surface);
+  box-shadow: 0 4px 20px -2px rgba(30, 64, 175, 0.08);
+}
+
+[data-theme="dark"] .faq-item.is-open {
+  box-shadow: 0 4px 20px -2px rgba(59, 130, 246, 0.15);
 }
 
 .faq-question {
   width: 100%;
   text-align: left;
-  padding: 1.25rem 1.5rem;
+  padding: 1.35rem 1.6rem;
   font-size: 1.05rem;
-  font-weight: 600;
+  font-weight: 700;
   color: var(--text-primary);
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 1rem;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  transition: color var(--transition);
 }
 
-.faq-answer {
-  padding: 0 1.5rem 1.25rem 1.5rem;
-  font-size: 0.925rem;
+.faq-question:hover {
+  color: var(--accent);
+}
+
+.faq-question-text {
+  flex-grow: 1;
+  line-height: 1.35;
+}
+
+.faq-icon-pill {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background-color: var(--bg-subtle);
+  border: 1px solid var(--border);
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), background-color var(--transition), color var(--transition), border-color var(--transition);
+}
+
+.faq-question:hover .faq-icon-pill {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.faq-item.is-open .faq-icon-pill {
+  transform: rotate(45deg);
+  background-color: var(--accent);
+  border-color: var(--accent);
+  color: #FFFFFF;
+}
+
+.faq-answer-collapse {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.faq-item.is-open .faq-answer-collapse {
+  grid-template-rows: 1fr;
+}
+
+.faq-answer-inner {
+  overflow: hidden;
+}
+
+.faq-answer-inner p {
+  padding: 0 1.6rem 1.4rem 1.6rem;
+  font-size: 0.95rem;
   color: var(--text-muted);
-  line-height: 1.6;
+  line-height: 1.65;
+  border-top: 1px solid transparent;
+}
+
+.faq-item.is-open .faq-answer-inner p {
+  border-top-color: var(--border);
+  padding-top: 0.85rem;
 }
 
 /* CTA & CONTACT SECTION */
