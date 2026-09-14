@@ -176,9 +176,10 @@
           once: true
         },
         opacity: 0,
-        y: 25,
-        duration: 0.75,
-        ease: 'power2.out'
+        y: 20,
+        duration: 0.7,
+        ease: 'power2.out',
+        clearProps: 'all'
       });
     });
 

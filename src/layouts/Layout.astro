@@ -181,6 +181,9 @@ const schemaData = {
   <meta name="twitter:description" content={description} />
   <meta name="twitter:image" content={fullOgImageUrl} />
 
+  <!-- Preload de Recursos Críticos (LCP) -->
+  <link rel="preload" as="image" href="/assets/logo.webp" type="image/webp" fetchpriority="high" />
+
   <!-- Tipografías optimizadas con display=swap -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -192,9 +195,9 @@ const schemaData = {
 <body>
   <slot />
 
-  <!-- GSAP y ScrollTrigger -->
-  <script is:inline src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-  <script is:inline src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-  <script is:inline src="/main.js"></script>
+  <!-- GSAP y ScrollTrigger (Diferidos para no bloquear renderizado FCP) -->
+  <script is:inline defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script is:inline defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script is:inline defer src="/main.js"></script>
 </body>
 </html>
