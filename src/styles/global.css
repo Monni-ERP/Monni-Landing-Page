@@ -158,8 +158,8 @@ img {
 
 .section-title {
   font-size: 2.25rem;
-  margin-top: 0.85rem;
-  margin-bottom: 1rem;
+  margin-top: 0;
+  margin-bottom: 0.9rem;
 }
 
 .section-subtitle {
@@ -1146,29 +1146,21 @@ body.menu-open #main {
 .clay-disciplines-bar {
   display: flex;
   align-items: center;
-  gap: 2rem;
+  justify-content: center;
   overflow-x: auto;
   white-space: nowrap;
-}
-
-.clay-disc-title {
-  font-size: 0.75rem;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  font-weight: 700;
-  color: var(--accent);
-  padding: 0.25rem 0.6rem;
-  background-color: var(--accent-soft);
-  border-radius: 4px;
 }
 
 .clay-disc-tags {
   display: flex;
   align-items: center;
-  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 1rem 1.25rem;
   font-size: 0.9rem;
   font-weight: 500;
   color: var(--text-secondary);
+  text-align: center;
 }
 
 .clay-bullet {
@@ -2066,10 +2058,11 @@ body.menu-open #main {
   border-top: 1px solid var(--border);
   padding-top: 2rem;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   font-size: 0.825rem;
   color: var(--text-light);
+  text-align: center;
 }
 
 /* RESPONSIVE */

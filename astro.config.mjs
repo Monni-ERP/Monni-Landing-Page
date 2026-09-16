@@ -2,5 +2,8 @@ import { defineConfig } from 'astro/config';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://monniagency.com'
+  site: 'https://monniagency.com',
+  devToolbar: {
+    enabled: false
+  }
 });
