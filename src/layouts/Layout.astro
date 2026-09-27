@@ -195,9 +195,9 @@ const schemaData = {
 <body>
   <slot />
 
-  <!-- GSAP y ScrollTrigger (Diferidos para no bloquear renderizado FCP) -->
-  <script is:inline defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-  <script is:inline defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <!-- GSAP y ScrollTrigger (Archivos locales 1st-party: cero cookies de terceros, alta velocidad y privacidad) -->
+  <script is:inline defer src="/vendor/gsap.min.js"></script>
+  <script is:inline defer src="/vendor/ScrollTrigger.min.js"></script>
   <script is:inline defer src="/main.js"></script>
 </body>
 </html>
